@@ -14,19 +14,9 @@ char *read_line(void)
     {
         
         char *buffer = (char *) malloc(bufferSize);
-        //char buffer1;
+        character =getline(&buffer, bufferSize, stdin);
+        printf()
 
-        // if (getchar() == '\n' || getchar() == EOF)
-        // {
-        //     buffer[0] = '\0';
-        //     return buffer;
-        // }
-        // {
-        //     printf("in here");
-        //     free(buffer);
-        //     * buffer = "";
-        //     return buffer; 
-        // }
         if (sizeof(gets(buffer)) >= bufferSize)
         {
             bufferSize = BUFFER + bufferSize;
