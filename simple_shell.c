@@ -12,23 +12,12 @@ char *read_line(void)
 {
     while(1)
     {
-        
-        char *buffer = (char *) malloc(bufferSize);
-        //character =getline(&buffer, bufferSize, stdin);
-        //printf()
+        size_t bufsize = 32;
+        char *buffer = (char *) malloc(bufsize * sizeof(char));
 
-        if (sizeof(gets(buffer)) >= bufferSize)
-        {
-            bufferSize = BUFFER + bufferSize;
-            buffer = realloc(buffer, bufferSize);
-
-
-        }
-
-        buffer = gets(buffer);
-        // //buffer1 = fgetc(stdin);
-        // printf("here is buffer:");
-        // printf("%c", buffer[0]);
+        size_t character =getline(&buffer, &bufsize, stdin);
+        //printf("%zu", character);
+        //printf("%s", buffer);
 
         if (buffer != NULL)
         {
@@ -154,20 +143,20 @@ void loop1(void)
     char **tokens;
     int status;
 
-    do
-    {
+    // do
+    // {
         printf("> ");
         //printf("here1");
         line = read_line();
-        //printf("here2");
-        tokens = tokenenizing(line);
+        printf("%s", line);
+        //tokens = tokenenizing(line);
         //printf("here3");
-        status = starting_process(tokens);
+        //status = starting_process(tokens);
         //printf("%s", *tokens);
         // free(line);
         // free(tokens);
 
-    } while(status);
+    // } while(status);
 
 }
 
