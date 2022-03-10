@@ -14,8 +14,8 @@ char *read_line(void)
     {
         
         char *buffer = (char *) malloc(bufferSize);
-        character =getline(&buffer, bufferSize, stdin);
-        printf()
+        //character =getline(&buffer, bufferSize, stdin);
+        //printf()
 
         if (sizeof(gets(buffer)) >= bufferSize)
         {
