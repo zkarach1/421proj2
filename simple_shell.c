@@ -15,9 +15,23 @@ char *read_line(void)
         size_t bufsize = 32;
         char *buffer = (char *) malloc(bufsize * sizeof(char));
 
-        size_t character =getline(&buffer, &bufsize, stdin);
+        
         //printf("%zu", character);
         //printf("%s", buffer);
+
+        //check for empty buffer
+
+        char c = getchar();
+        if (c == EOF || c == '\n')
+        {
+            printf("in here");
+
+            return buffer; 
+
+        }
+
+
+        getline(&buffer, &bufsize, stdin);
 
         if (buffer != NULL)
         {
@@ -25,7 +39,8 @@ char *read_line(void)
             return buffer; 
 
         }   
-        else if (ferror(stdin))
+        
+        if (ferror(stdin))
         {
             perror("Error in read line");
         }
@@ -148,6 +163,7 @@ void loop1(void)
         printf("> ");
         //printf("here1");
         line = read_line();
+        printf("here is the buffer:");
         printf("%s", line);
         //tokens = tokenenizing(line);
         //printf("here3");
