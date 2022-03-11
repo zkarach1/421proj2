@@ -26,8 +26,8 @@ char *read_line(void)
         //if its the end of the file just return null buffer
         if (c == EOF || c == '\n')
         {
-            //printf("in here");
-            buffer = NULL;
+            printf("in here");
+            buffer[0] = '\n';
             return buffer; 
 
         }
@@ -108,25 +108,35 @@ int starting_process(char **tokens)
     pid_t child_pid;
     pid_t wait_pid;
 
+
     char str1[] = "exit"; 
     char str2[] = "Exit";
 
-    int check1 = strcmp(tokens[0], str1);
-    int check2 = strcmp(tokens[0], str2);
+    //check for exit
 
-    if(tokens[0] == NULL)
+    if(tokens == NULL )
     {
 
         return 1;
+
     }
 
-    if ((check1 == 0) || check2 == 0 )
+    if (tokens[0] != NULL)
     {
-        //need to free all memory
-        exit(0); 
+        int check1 = strcmp(tokens[0], str1);
+        int check2 = strcmp(tokens[0], str2);
+        if ((check1 == 0) || check2 == 0 )
+        {
+            //need to free all memory
+            exit(0); 
+        }
+
+
     }
 
 
+
+//running arguments
     child_pid = fork();
     if (child_pid == 0)
     {
@@ -172,18 +182,15 @@ void loop1(void)
     char **tokens;
     int status;
 
-    // do
-    // {
+    do
+    {
         printf("> ");
-        //printf("here1");
         line = read_line();
-        //printf("here is the buffer:");
-        //printf("%s", line);
         tokens = tokenenizing(line);
-        //status = starting_process(tokens);
+        status = starting_process(tokens);
         // free(tokens);
 
-    // } while(status);
+    } while(status);
 
 }
 
