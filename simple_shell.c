@@ -20,22 +20,24 @@ char *read_line(void)
         //printf("%s", buffer);
 
         //check for empty buffer
+        getline(&buffer, &bufsize, stdin);
 
-        char c = getchar();
+        char c = buffer[0];
+        //if its the end of the file just return null buffer
         if (c == EOF || c == '\n')
         {
-            printf("in here");
-
+            //printf("in here");
+            buffer = NULL;
             return buffer; 
 
         }
 
 
-        getline(&buffer, &bufsize, stdin);
-
+        //getline(&buffer, &bufsize, stdin);
+        //getline automatically realocated space so no need to do it our self
         if (buffer != NULL)
         {
-            //printf("%s",buffer);
+
             return buffer; 
 
         }   
@@ -49,35 +51,47 @@ char *read_line(void)
 
 char **tokenenizing(char *line)
 {
-    
+
     char delimit[] = " \t\r\n\v\f";
     char *token;
-    char **token_array = (char **) malloc(bufferSize);
-    int size_check = (sizeof(char *) * bufferSize);
-    //printf(size_check);
+    char **token_array = malloc(bufferSize * sizeof(char**));
+    int i  =0;
     int count = 0;
 
-    token = strtok(line, delimit);
-    while(token != NULL)
+    //gonna make a copy of the string to 
+    char *line2 = (char*)malloc(strlen(line));
+    strcpy(line2,line);
+
+    if( strtok(line2, delimit) != NULL)
     {
-        //printf("%s", token);
-        token_array[count]= token;
         count++;
-        //check to make sure theres enough space
-        if (count >= size_check)
-            {
-                bufferSize = BUFFER + bufferSize; 
-                token_array = realloc(token_array, bufferSize * sizeof(char**));
-                
-                
-            }
-
-        token = strtok(NULL, delimit); 
-        //printf("%s", token);
-
+        while( strtok(NULL," \t") != NULL )
+            count++;
     }
 
-    token_array[count] = NULL;
+    //printf("this many counts");
+    //printf("%d", count);
+
+    if (count >= bufferSize)
+    {
+        bufferSize = BUFFER + bufferSize; 
+        token_array = realloc(token_array, bufferSize * sizeof(char**));
+    }
+
+    token = strtok(line, delimit);
+    
+    while (token!=NULL)
+    {
+            token_array[i]= token;
+            //printf("here is token in array: ");
+            //printf("%s", token_array[i]);
+            i++;
+            token = strtok(NULL, delimit); 
+
+    }
+  
+
+    token_array[i] = NULL;
     return token_array; 
 
 
@@ -163,13 +177,10 @@ void loop1(void)
         printf("> ");
         //printf("here1");
         line = read_line();
-        printf("here is the buffer:");
-        printf("%s", line);
-        //tokens = tokenenizing(line);
-        //printf("here3");
+        //printf("here is the buffer:");
+        //printf("%s", line);
+        tokens = tokenenizing(line);
         //status = starting_process(tokens);
-        //printf("%s", *tokens);
-        // free(line);
         // free(tokens);
 
     // } while(status);
