@@ -47,6 +47,7 @@ char *read_line(void)
             perror("Error in read line");
         }
     }
+
 }   
 
 char **tokenenizing(char *line)
@@ -188,13 +189,14 @@ void loop1(void)
         line = read_line();
         tokens = tokenenizing(line);
         status = starting_process(tokens);
-        // free(tokens);
+        free(line);
+        free(tokens);
 
     } while(status);
 
 }
 
-int main (int argc, char **argv)
+int main ()
 {
     loop1(); 
 }
