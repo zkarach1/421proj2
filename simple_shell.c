@@ -128,9 +128,74 @@ int starting_process(char **tokens)
         int check2 = strcmp(tokens[0], str2);
         if ((check1 == 0) || check2 == 0 )
         {
-            //need to free all memory
+            free(tokens);
             exit(0); 
         }
+
+
+    }
+
+    //check for proc
+    char str3[] = "proc";
+    int check3 = strcmp(tokens[0], str3);
+
+    if (check3 == 0)
+    {
+    
+        //check to make sure there is an argument with proc
+        if (tokens[1] == NULL)
+        {
+            printf("no argument given \n");
+            return 1;
+        }
+
+        //check if more than one argument was given
+
+        if (tokens[2]!= NULL)
+        {
+            printf("too many arguments were given with proc \n");
+            return 1;
+        }
+
+        
+
+
+        //if argument is given build file path
+        //string manipulation,how to change a string in c 
+
+        //how to open file in c 
+        //how to read from file from c
+        //printf("herenow");
+        //printf("%s", tokens[1]);
+        char *string = "/proc/";
+        //printf("herenow");
+        
+        size_t len1 = strlen(string);
+        size_t len2 = strlen(tokens[1]);
+        char *result = malloc(len1 +len2 +1);
+        memcpy(result, string, len1);
+        memcpy(result + len1, tokens[1], len2 + 1);
+        printf("%s", result);
+
+        //open file
+        //strcat(string,tokens[1]);
+        //printf("%s", string);
+
+        return 1; 
+            // char *array[2]; 
+            // char string[2];
+            // array[0] = '/proc/';
+            // array[1]= tokens[1];
+
+            // strncpy(string,array,2);
+            // printf("%s", string);
+
+
+
+
+        
+
+
 
 
     }
